@@ -2,10 +2,10 @@ use ndarray::Array1;
 
 #[derive(Default)]
 struct GhFilterOrder<T> {
-    order: u32,
+    order: T,
     g: T,
-    h: Option<T>,
-    k: Option<T>,
+    h: T,
+    k: T,
     x: Array1<T>,
     y: Array1<T>,
     z: Array1<T>,
