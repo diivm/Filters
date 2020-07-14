@@ -1,8 +1,8 @@
 use ndarray::Array1;
 
-#[derive(Default)]
+#[derive(Default, Builder)]
 struct GhFilterOrder<T> {
-    order: T,
+    order: u32,
     g: T,
     h: T,
     k: T,
