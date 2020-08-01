@@ -16,4 +16,5 @@ matrix:
 script:
   - rustc --version
   - cargo --version
-  - cargo build --verbose --all
+  - cd filters
+  - cargo build --verbose
