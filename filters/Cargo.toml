@@ -7,3 +7,5 @@ edition = "2018"
 
 [dependencies]
 ndarray = "0.13.1"
+num-traits = "0.2.12"
+ocl-convolution = "0.2.0"
