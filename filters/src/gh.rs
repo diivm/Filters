@@ -2,13 +2,6 @@ use ndarray::ArrayD;
 use num::traits::{Float, Zero};
 
 #[derive(Default)]
-struct GainParameters<T: Float> {
-    g: T,
-    h: T,
-    k: T,
-}
-
-#[derive(Default)]
 struct State<T: Float> {
     x: ArrayD<T>,
     y: ArrayD<T>,
@@ -18,8 +11,9 @@ struct State<T: Float> {
 #[derive(Default)]
 struct GhFilterConfig<T: Float> {
     order: usize,
-    gain_parameters: GainParameters<T>,
-    dt: T,
+    g: T,
+    h: T,
+    k: T,
 }
 
 impl<T: Float> GhFilterConfig<T> {
