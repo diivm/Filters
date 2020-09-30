@@ -18,23 +18,23 @@ struct GhFilterConfig<T: Float + ScalarOperand> {
 }
 
 impl<T: Float + ScalarOperand> GhFilterConfig<T> {
-    fn checks(order: &usize, g: &T, h: &T, k: &T) -> Result<usize, &'static str> {
-        match order {
+    fn checks(&self) -> Result<usize, &'static str> {
+        match self.order {
             0 => {
-                if Zero::is_zero(h) && Zero::is_zero(k) {
-                    Ok(*order)
+                if Zero::is_zero(&self.h) && Zero::is_zero(&self.k) {
+                    Ok(self.order)
                 } else {
                     Err("h and k non-zero for order 0")
                 }
             }
             1 => {
-                if Zero::is_zero(k) {
-                    Ok(*order)
+                if Zero::is_zero(&self.k) {
+                    Ok(self.order)
                 } else {
                     Err("k non-zero for order 1")
                 }
             }
-            2 => Ok(*order),
+            2 => Ok(self.order),
             _ => Err("Order should be in between 0 and 2"),
         }
     }
