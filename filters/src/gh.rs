@@ -1,22 +1,23 @@
-use ndarray::ArrayD;
+use ndarray::{ArrayD, ScalarOperand};
+use std::ops::AddAssign;
 use num::traits::{Float, Zero};
 
 #[derive(Default)]
-struct State<T: Float> {
+struct State<T: Float + ScalarOperand> {
     x: ArrayD<T>,
     y: ArrayD<T>,
     z: ArrayD<T>,
 }
 
 #[derive(Default)]
-struct GhFilterConfig<T: Float> {
+struct GhFilterConfig<T: Float + ScalarOperand> {
     order: usize,
     g: T,
     h: T,
     k: T,
 }
 
-impl<T: Float> GhFilterConfig<T> {
+impl<T: Float + ScalarOperand> GhFilterConfig<T> {
     fn checks(order: &usize, g: &T, h: &T, k: &T) -> Result<usize, &'static str> {
         match order {
             0 => {
