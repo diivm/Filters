@@ -40,10 +40,15 @@ impl<T: Float + ScalarOperand> GhFilterConfig<T> {
     }
 }
 
-// fn update(&, z: DVector<T>) {
-//     let g_param = (GhFilterOrder::<T>::check_valid_g(&self.order, &self.g).unwrap()).unwrap();
-//     let h_param = (GhFilterOrder::<T>::check_valid_h(&self.order, &self.h).unwrap()).unwrap();
-//     let k_param = (GhFilterOrder::<T>::check_valid_k(&self.order, &self.k).unwrap()).unwrap();
+fn update<T>(state: &mut State<T>, config: &GhFilterConfig<T>, dt: &T) -> ()
+where
+    T: Float + ScalarOperand + AddAssign,
+{
+    match GhFilterConfig::<T>::checks(config).unwrap() {
+        0 => {
+            state.y = &state.z - &state.x;
+            state.x += &(&state.y * config.g);
+        }
 
 //     match GhFilterOrder::<T>::check_valid_order(&self.order).unwrap() {
 //         0 => {
@@ -68,9 +73,9 @@ impl<T: Float + ScalarOperand> GhFilterConfig<T> {
 //         }
 //         2 => {
 //             let x = self.x.column(0);
-//             let dx = self.x.column(1);
-//             let ddx = self.x.column(2);
-//             let dxdt = dx * self.dt;
+        _ => panic!("Not implemented for order not in {0, 1, 2}"),
+    }
+}
 //             let T2 = self.dt.powi(2);
 
 //             // // FIXME
