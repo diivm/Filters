@@ -1,3 +1,3 @@
 #![crate_name = "filters"]
 
-mod gh;
+mod ghk;
