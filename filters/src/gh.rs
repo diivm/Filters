@@ -4,9 +4,9 @@ use num::traits::{Float, Zero};
 
 #[derive(Default)]
 struct State<T: Float + ScalarOperand> {
-    x: ArrayD<T>,
-    y: ArrayD<T>,
-    z: ArrayD<T>,
+    x: Array1<T>,
+    dx: Array1<T>,
+    ddx: Array1<T>,
 }
 
 #[derive(Default)]
