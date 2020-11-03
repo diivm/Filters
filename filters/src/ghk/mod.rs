@@ -2,14 +2,14 @@ use ndarray::{Array1, ScalarOperand};
 use num::traits::Float;
 use std::ops::{AddAssign, Mul};
 
-#[derive(Default)]
+#[derive(Default, Debug)]
 struct State<T: Float + ScalarOperand> {
     x: Array1<T>,
     dx: Array1<T>,
     ddx: Array1<T>,
 }
 
-#[derive(Default)]
+#[derive(Default, Debug)]
 struct GhkFilterConfig<T: Float + ScalarOperand> {
     g: T,
     h: T,
@@ -18,7 +18,7 @@ struct GhkFilterConfig<T: Float + ScalarOperand> {
 
 fn update<T>(state: &mut State<T>, config: &GhkFilterConfig<T>, z: &Array1<T>, dt: &T) -> ()
 where
-    T: Float + ScalarOperand + AddAssign + Mul<f64, Output = T>,
+    T: Float + ScalarOperand + AddAssign + Mul<f32, Output = T>,
 {
     let dt_sq = (*dt) * (*dt);
 
