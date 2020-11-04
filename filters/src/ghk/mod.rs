@@ -38,3 +38,36 @@ where
     state.dx = &dx_prediction + &(&y * config.h / (*dt));
     state.ddx = &ddx_prediction + &(&y * config.k / dt_sq);
 }
+
+#[cfg(test)]
+mod UnitTests {
+    use ndarray::{arr1, Array1};
+    #[test]
+    fn test_update_function_random_values() {
+        // Values taken from:
+        // https://nbviewer.jupyter.org/github/rlabbe/Kalman-and-Bayesian-Filters-in-Python/blob/master/01-g-h-filter.ipynb
+        let x = arr1::<f32>(&[1.0, 10.0, 100.0]);
+        let x_dim = x.raw_dim();
+        let dx = arr1::<f32>(&[10.0, 12.0, 0.2]);
+        let ddx = Array1::<f32>::zeros(x_dim);
+        let mut state = super::State::<f32> {
+            x: x,
+            dx: dx,
+            ddx: ddx,
+        };
+        let config = super::GhkFilterConfig::<f32> {
+            g: 0.8,
+            h: 0.2,
+            ..Default::default()
+        };
+        let z = arr1::<f32>(&[2.0, 11.0, 102.0]);
+        let dt = 1.0;
+
+        println!("Intital State: {:?}", state);
+        super::update::<f32>(&mut state, &config, &z, &dt);
+        println!("State after Updation: {:?}", state);
+
+        assert_eq!(state.x, arr1::<f32>(&[3.7999997, 13.2, 101.64]));
+        assert_eq!(state.dx, arr1::<f32>(&[8.2, 9.8, 0.5600006]));
+    }
+}
