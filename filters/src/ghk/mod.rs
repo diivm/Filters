@@ -20,6 +20,11 @@ fn update<T>(state: &mut State<T>, config: &GhkFilterConfig<T>, z: &Array1<T>, d
 where
     T: Float + ScalarOperand + AddAssign + Mul<f32, Output = T>,
 {
+    // check dimensions
+    assert_eq!(state.x.raw_dim(), state.dx.raw_dim());
+    assert_eq!(state.x.raw_dim(), state.ddx.raw_dim());
+    assert_eq!(state.x.raw_dim(), z.raw_dim());
+
     let dt_sq = (*dt) * (*dt);
 
     // prediction step
