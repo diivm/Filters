@@ -7,3 +7,4 @@ edition = "2018"
 
 [dependencies]
 ndarray = "0.13.1"
+num = "0.3.0"
